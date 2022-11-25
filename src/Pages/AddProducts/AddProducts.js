@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 import Loading from '../Shared/Loading/Loading';
@@ -85,8 +86,8 @@ const AddProducts = () => {
                         .then((res) => res.json())
                         .then((result) => {
                             if (result.acknowledged) {
-                                // toast.success(${ data.productName } is added successfully);
-                                alert('product added')
+                                toast.success(`${ data.productName } is added successfully`);
+                             
                                 reset();
                                 // navigate("/dashboard/myproducts");
                             }
