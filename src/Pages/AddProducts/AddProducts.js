@@ -74,6 +74,7 @@ const AddProducts = () => {
                         resalePrice: data.resalePrice,
                         yearOfUse: data.yearOfUse,
                         postTime: time,
+                        category_id: data.category,
                     };
                     //save product info to the database
                     fetch("http://localhost:5000/add", {
@@ -157,6 +158,26 @@ const AddProducts = () => {
                             <p className="text-red-500">{errors.productName.message}</p>
                         )}
                     </div>
+
+
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label">
+                            {" "}
+                            <span className="label-text">Your product category_id (01 or 02 or 03)</span>
+                        </label>
+                        <input
+                            type="text"
+                            {...register("category", {
+                                required: "category is Required",
+                            })}
+                            className="input input-bordered w-full max-w-xs"
+                        />
+                        {errors.productName && (
+                            <p className="text-red-500">{errors.category.message}</p>
+                        )}
+                    </div>
+
+
 
                     <div className="form-control w-full max-w-xs">
                         <label className="label">

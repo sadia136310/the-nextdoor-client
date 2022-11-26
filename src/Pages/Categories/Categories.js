@@ -6,7 +6,7 @@ const Categories = () => {
     // const [loading,setLoading]=useState(false);
         useEffect(() => {
             // setLoading(true);
-            fetch('http://localhost:5000/categories')
+            fetch('http://localhost:5000/product')
                 .then(res => res.json())
                 .then(data => setCategories(data))
                 // setLoading(false)
