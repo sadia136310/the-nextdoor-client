@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const ProductsCard = ({ category }) => {
-    const { _id, sellerName, sellerPhoneNumber, purchaseYear, originalPrice, productName, productPhoto, resalePrice, yearOfUse, postTime,
+const ProductsCard = ({ category, setProducts }) => {
+    const { sellerName, sellerPhoneNumber, purchaseYear, originalPrice, productName, productPhoto, resalePrice, yearOfUse, postTime,
         description, condition, location } = category;
 
     return (
@@ -27,7 +26,9 @@ const ProductsCard = ({ category }) => {
 
                     <p>Description: {description}</p>
                     <div className="card-actions justify-end">
-                        <Link to={`/product_categories/${_id}`}>  <button className="btn btn-outline btn-warning">Book Now</button></Link>
+                        <label htmlFor="booking-modal" className="btn btn-outline btn-warning" onClick={() => setProducts(category)}
+                        
+                        >Book Now</label>
                     </div>
                 </div>
             </div>
