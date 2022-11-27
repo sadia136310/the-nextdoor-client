@@ -62,7 +62,7 @@ const BookingModal = ({ products, setProducts, refetch }) => {
 
 
                     <form onSubmit={handleSubmit}>
-                        {/* <h3 className="text-lg font-bold">{ }</h3> */}
+                       
                         <input type="text" name='productName' defaultValue={productName} disabled className="input w-full input-bordered" />
                         <br />
                         <br />

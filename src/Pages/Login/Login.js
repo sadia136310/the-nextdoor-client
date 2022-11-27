@@ -1,13 +1,17 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { signIn } = useContext(AuthContext);
+    const { signIn, providerLogin } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = data => {
         console.log(data);
@@ -17,12 +21,47 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
                 setLoginUserEmail(data.email);
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 console.log(error.message);
                 setLoginError(error.message);
             })
     }
+
+
+    const googleProvider = new GoogleAuthProvider()
+    const handleGoogleSignIn = () => {
+        providerLogin(googleProvider)
+            .then(result => {
+                const user = result.user;
+
+                // get jwt token
+                fetch('https://a-magical-momemt-maker-server.vercel.app/jwt', {
+                    method: "POST",
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ user: user.email })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem('momentJwt-token', data.token)
+                    })
+                    .catch(e => console.error(e))
+                navigate(from, { replace: true });
+
+
+            })
+            .catch(error => {
+                console.error(error);
+            })
+
+
+    }
+
+  
+
     return (
         <div className='h-[800px] flex justify-center items-center'>
             <div className='w-96 p-7'>
@@ -48,7 +87,7 @@ const Login = () => {
                             className="input input-bordered w-full max-w-xs" />
                         <label className="label"> <span className="label-text">Forget Password?</span></label>
                         {errors.password && <p className='text-red-600'>
-                    {errors.password?.message}</p>}
+                            {errors.password?.message}</p>}
 
                     </div>
 
@@ -68,7 +107,7 @@ const Login = () => {
                 </form>
                 <p>New to Nextdoor? <Link className='text-secondary' to="/signup">Create new Account</Link></p>
                 <div className="divider">OR</div>
-                <button className='btn btn-outline btn-warning w-full'>CONTINUE WITH GOOGLE</button>
+                <button onClick={handleGoogleSignIn} className='btn btn-outline btn-warning w-full'>CONTINUE WITH GOOGLE</button>
             </div>
         </div >
     );

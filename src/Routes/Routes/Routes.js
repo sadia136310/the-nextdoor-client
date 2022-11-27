@@ -5,6 +5,7 @@ import AddProducts from "../../Pages/AddProducts/AddProducts";
 
 import Blog from "../../Pages/Blog/Blog";
 import CategoriesDetails from "../../Pages/CategoriesDetails/CategoriesDetails";
+import AllUsers from "../../Pages/Dashboard/AllUsers/AllUsers";
 import MyOrders from "../../Pages/Dashboard/MyOders/MyOrders";
 import Payment from "../../Pages/Dashboard/Payment/Payment";
 import SellerProducts from "../../Pages/Dashboard/SellerProducts/SellerProducts";
@@ -14,6 +15,7 @@ import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 
 import Signup from "../../Pages/Signup/Signup";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -53,7 +55,7 @@ const router = createBrowserRouter([
 
         path: '/dashboard',
         errorElement: <DisplayError></DisplayError>,
-        element: <DashboardLayout></DashboardLayout>,
+        element: <PrivateRoute> <DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
             {
                 path: '/dashboard',
@@ -66,6 +68,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/sellingproducts',
                 element: <SellerProducts></SellerProducts>
+            },
+            {
+                path: '/dashboard/allusers',
+                element: <AllUsers></AllUsers>
             },
             {
                 path: '/dashboard/payment/:id',

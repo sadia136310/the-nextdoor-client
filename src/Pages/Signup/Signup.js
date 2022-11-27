@@ -1,13 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const Signup = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState('');
+  
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
+
 
 
     const handleSignup = data => {
@@ -18,15 +24,16 @@ const Signup = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                // toast('User Created Successfully');
-            toast.success('user cre successfully!!')
+                toast.success('User Created Successfully');
+
                 const userInfo = {
                     displayName: data.name
                 }
                 updateUser(userInfo)
                     .then(() => {
 
-                        // saveUser(data.name, data.email);
+                        saveUser(data.name, data.email);
+                        navigate(from, { replace: true });
                     })
                     .catch(error => console.log(error))
             })
@@ -34,6 +41,33 @@ const Signup = () => {
                 console.log(error)
                 setSignUpError(error.message);
             });
+    }
+
+    const saveUser = (name, email) => {
+        const user = { name, email };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                getUserToken(email);
+              
+            })
+    }
+
+    const getUserToken=email=>{
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.accessToken){
+                localStorage.setItem('accessToken',data.accessToken);
+                navigate('/')
+            }
+        })
     }
     return (
         <div className='h-[800px] flex justify-center items-center'>
@@ -72,9 +106,7 @@ const Signup = () => {
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
                     <input className='btn btn-accent w-full mt-4' value="Sign Up" type="submit" />
-                    {/* <div>
-                        {loginError && <p className='text-red-600'>{loginError}</p>}
-                    </div> */}
+
                     {signUpError && <p className='text-red-600'>signUpError</p>}
                 </form>
                 <p>Already Have an Account?<Link className='text-secondary' to="/login">Please Login</Link></p>

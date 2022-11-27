@@ -90,7 +90,7 @@ const AddProducts = () => {
                                 toast.success(`${ data.productName } is added successfully`);
                              
                                 reset();
-                                // navigate("/dashboard/myproducts");
+                                navigate("/dashboard/myproducts");
                             }
                         });
                 }
