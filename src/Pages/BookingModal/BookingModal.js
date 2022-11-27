@@ -10,16 +10,16 @@ const BookingModal = ({ products, setProducts, refetch }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.target;
-        const productName = form.productName;
-        const resalePrice = form.resalePrice;
+        const productName = form.productName.value;
+        const resalePrice = form.resalePrice.value;
         const name = form.name.value;
         const email = form.email.value;
         const phone = form.phone.value;
         const location = form.location.value;
 
         const booking = {
-            itemsName: productName,
-            itemsPrice: resalePrice,
+            productName,
+            resalePrice,
             name,
             email,
             phone,
@@ -41,6 +41,9 @@ const BookingModal = ({ products, setProducts, refetch }) => {
                     toast.success('booking confirmed');
                     refetch();
                 }
+                else {
+                    toast.error(data.message)
+                }
 
             })
 
@@ -59,11 +62,11 @@ const BookingModal = ({ products, setProducts, refetch }) => {
 
 
                     <form onSubmit={handleSubmit}>
-                        <h3 className="text-lg font-bold">{ }</h3>
-                        <input type="text" name='items' defaultValue={productName} disabled className="input w-full input-bordered" />
+                        {/* <h3 className="text-lg font-bold">{ }</h3> */}
+                        <input type="text" name='productName' defaultValue={productName} disabled className="input w-full input-bordered" />
                         <br />
                         <br />
-                        <input type="text" name='price' defaultValue={resalePrice} disabled className="input w-full input-bordered" />
+                        <input type="text" name='resalePrice' defaultValue={resalePrice} disabled className="input w-full input-bordered" />
                         <br />
                         <br />
                         <input name='name' type="text" defaultValue={user?.displayName} disabled placeholder="Your Name" className="input w-full input-bordered pt-5" />
