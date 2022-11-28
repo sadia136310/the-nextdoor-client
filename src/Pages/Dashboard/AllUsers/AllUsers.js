@@ -19,14 +19,14 @@ const AllUsers = () => {
         }
     })
 
-    const handleVerifyBtn = (id) => {
+    const handleAdminBtn = (id) => {
         fetch(`https://the-nextdoor-server.vercel.app/users/admin/${id}`, {
             method: 'PUT',
         })
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount > 0) {
-                    toast.success("user verified successfully!!")
+                    toast.success("Make Admin successfully!!")
                     refetch();
                 }
 
@@ -66,7 +66,8 @@ const AllUsers = () => {
                             <th></th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>User verify</th>
+                           
+                            <th>Make Admin</th>
                             <th>Delete user</th>
                         </tr>
                     </thead>
@@ -77,8 +78,8 @@ const AllUsers = () => {
                                 <th>{i + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user?.role !== 'verified' &&
-                                    <button onClick={() => handleVerifyBtn(user._id)} className='btn btn-xs btn-info'>User verify</button>
+                                <td>{user?.role !== 'admin' &&
+                                    <button onClick={() => handleAdminBtn(user._id)} className='btn btn-xs btn-info'>Make Admin</button>
 
                                 }</td>
                                 
