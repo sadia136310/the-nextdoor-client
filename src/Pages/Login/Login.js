@@ -10,6 +10,7 @@ const Login = () => {
     const { signIn, providerLogin } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
+    
 
 
 
@@ -30,6 +31,7 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
                 setLoginUserEmail(data.email);
+                navigate('/');
             })
             .catch(error => {
                 console.log(error.message);

@@ -36,7 +36,7 @@ const AddProducts = () => {
     const { data: categories = [], isLoading } = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/categoryName");
+            const res = await fetch("https://the-nextdoor-server.vercel.app/categoryName");
             const data = await res.json();
             return data;
         },
@@ -77,7 +77,7 @@ const AddProducts = () => {
                         category_id: data.category,
                     };
                     //save product info to the database
-                    fetch("http://localhost:5000/add", {
+                    fetch("https://the-nextdoor-server.vercel.app/add", {
                         method: "POST",
                         headers: {
                             "content-type": "application/json",

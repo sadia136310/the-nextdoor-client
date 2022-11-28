@@ -7,7 +7,7 @@ const Categories = () => {
     const [loading,setLoading]=useState(false);
         useEffect(() => {
             setLoading(true);
-            fetch('http://localhost:5000/product')
+            fetch('https://the-nextdoor-server.vercel.app/product')
                 .then(res => res.json())
                 .then(data => setCategories(data))
                 setLoading(false)

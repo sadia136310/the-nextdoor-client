@@ -13,14 +13,14 @@ const AllUsers = () => {
     const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users');
+            const res = await fetch('https://the-nextdoor-server.vercel.app/users');
             const data = await res.json();
             return data;
         }
     })
 
     const handleVerifyBtn = (id) => {
-        fetch(`http://localhost:5000/users/admin/${id}`, {
+        fetch(`https://the-nextdoor-server.vercel.app/users/admin/${id}`, {
             method: 'PUT',
         })
             .then(res => res.json())
@@ -34,7 +34,7 @@ const AllUsers = () => {
     }
 
     const handleDeleteProduct = (user) => {
-        fetch(`http://localhost:5000/users/${user._id}`, {
+        fetch(`https://the-nextdoor-server.vercel.app/users/${user._id}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json'

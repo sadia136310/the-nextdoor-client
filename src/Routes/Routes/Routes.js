@@ -44,7 +44,7 @@ const router = createBrowserRouter([
             {
                 path: '/categories/:id',
                 element: <CategoriesDetails></CategoriesDetails>,
-                loader: ({ params }) => fetch(`http://localhost:5000/product_categories/${params.id}`)
+                loader: ({ params }) => fetch(`https://the-nextdoor-server.vercel.app/product_categories/${params.id}`)
 
 
             },
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/payment/:id',
                 element: <Payment></Payment>,
-                loader: ({ params }) => fetch(`http://localhost:5000/bookings/${params.id}`)
+                loader: ({ params }) => fetch(`https://the-nextdoor-server.vercel.app/bookings/${params.id}`)
             }
         ]
 

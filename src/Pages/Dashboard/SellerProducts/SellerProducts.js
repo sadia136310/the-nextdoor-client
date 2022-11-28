@@ -16,7 +16,7 @@ const SellerProduct = () => {
 
 
 
-    const url = `http://localhost:5000/product_categories?email=${user?.email}`
+    const url = `https://the-nextdoor-server.vercel.app/product_categories?email=${user?.email}`
 
     const { data: addProducts = [], refetch, isLoading } = useQuery({
         queryKey: ['addProducts', user?.email],
@@ -31,7 +31,7 @@ const SellerProduct = () => {
     }
 
     const handleDeleteProduct = (product) => {
-        fetch(`http://localhost:5000/product_categories/${product._id}`, {
+        fetch(`https://the-nextdoor-server.vercel.app/product_categories/${product._id}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json'
