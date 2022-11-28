@@ -1,9 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import Loading from '../../Shared/Loading/Loading';
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
 const AllUsers = () => {
+    const [deletingUser, setDeletingUser] = useState(null);
 
-    const { data: users = [] } = useQuery({
+    const closeModal = () => {
+        setDeletingUser(null);
+    }
+    const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/users');
@@ -12,23 +19,48 @@ const AllUsers = () => {
         }
     })
 
-    const handleVerifyBtn=(id)=>{
-        fetch(`http://localhost:5000/users/admin/${id}`,{
-            method:'PUT',
+    const handleVerifyBtn = (id) => {
+        fetch(`http://localhost:5000/users/admin/${id}`, {
+            method: 'PUT',
         })
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data);
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    toast.success("user verified successfully!!")
+                    refetch();
+                }
+
+            })
+    }
+
+    const handleDeleteProduct = (user) => {
+        fetch(`http://localhost:5000/users/${user._id}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json'
+            }
         })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    refetch();
+                    toast.success('User Deleted Successfully!!')
+                    console.log(data);
+                }
+            })
+    }
+
+    if (isLoading) {
+        return <Loading></Loading>
     }
 
     return (
         <div>
-            <h2 className='text-3xl font-bold m-10'>All users</h2>
+            <h2 className='text-4xl text-purple-300 font-bold m-10'>All users</h2>
 
             <div className="overflow-x-auto">
                 <table className="table w-full">
-                    
+
                     <thead>
                         <tr>
                             <th></th>
@@ -39,24 +71,43 @@ const AllUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                         {
-                            users.map((user,i)=><tr key={user._id}>
-                                <th>{i+1}</th>
+                            users.map((user, i) => <tr key={user._id}>
+                                <th>{i + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user?.role !== 'verified' && 
-                                    <button onClick={()=>handleVerifyBtn(user._id)} className='btn btn-xs btn-info'>User verify</button>
-                                   
+                                <td>{user?.role !== 'verified' &&
+                                    <button onClick={() => handleVerifyBtn(user._id)} className='btn btn-xs btn-info'>User verify</button>
+
                                 }</td>
-                                <td><button className='btn btn-xs btn-error'>Delete user</button></td>
+                                
+
+                                <td>
+                                    <label onClick={() => setDeletingUser(user)} htmlFor="confirmation-modal" className='btn btn-outline btn-warning'>Delete</label>
+
+                                </td>
                             </tr>)
                         }
-                        
-                        
+
+
                     </tbody>
                 </table>
+
+                
             </div>
+            {
+                deletingUser &&
+                <ConfirmationModal
+                    title={`Are you sure Delete ?`}
+                    message={`The user name ${deletingUser.name}`}
+                    closeModal={closeModal}
+                    handleDeleteProduct={handleDeleteProduct}
+                    modalData={deletingUser}
+                >
+
+                </ConfirmationModal>
+            }
         </div>
     );
 };

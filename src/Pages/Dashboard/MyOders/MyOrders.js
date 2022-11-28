@@ -10,11 +10,7 @@ const MyOrders = () => {
     const { data: bookings = [] } = useQuery({
         queryKey: ['bookings', user?.email],
         queryFn: async () => {
-            const res = await fetch(url,{
-                headers:{
-                    authorization: `bearer ${localStorage.getItem('accessToken')}`
-                }
-            });
+            const res = await fetch(url);
             const data = await res.json();
             return data;
         }
@@ -46,7 +42,7 @@ const MyOrders = () => {
                             <th>{i + 1}</th>
                             <td><div className="avatar">
                                 <div className="w-24 rounded-full">
-                                    {/* <img src={}alt=" " /> */}
+                                    <img src={booking?.productPhoto} alt=" " />
                                 </div>
                             </div></td>
                             <td>{booking?.productName}</td>
@@ -65,9 +61,7 @@ const MyOrders = () => {
                                         booking.resalePrice && booking.paid && <span className='text-green-500'>Paid</span>
                                     }
 
-                                {/* <button
-                                    className='btn btn-primary btn-sm'
-                                >Pay</button> */}
+                             
                             </td>
                         </tr>)
                     }

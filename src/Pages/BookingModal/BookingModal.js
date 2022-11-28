@@ -5,25 +5,28 @@ import { AuthContext } from '../../contexts/AuthProvider';
 
 const BookingModal = ({ products, setProducts, refetch }) => {
     const { user } = useContext(AuthContext);
-    const { productName, resalePrice } = products;
+    const { productName, resalePrice, productPhoto } = products;
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.target;
         const productName = form.productName.value;
         const resalePrice = form.resalePrice.value;
+        const   productPhoto = form.productPhoto.value;
         const name = form.name.value;
         const email = form.email.value;
         const phone = form.phone.value;
         const location = form.location.value;
 
         const booking = {
+            productPhoto,
             productName,
             resalePrice,
             name,
             email,
             phone,
             location,
+          
         }
 
         fetch('http://localhost:5000/bookings', {
@@ -62,16 +65,21 @@ const BookingModal = ({ products, setProducts, refetch }) => {
 
 
                     <form onSubmit={handleSubmit}>
-                       
+
                         <input type="text" name='productName' defaultValue={productName} disabled className="input w-full input-bordered" />
                         <br />
                         <br />
                         <input type="text" name='resalePrice' defaultValue={resalePrice} disabled className="input w-full input-bordered" />
                         <br />
                         <br />
+                        <input type="text" name='productPhoto' defaultValue={productPhoto} disabled className="input w-full input-bordered" />
+                        <br />
+                        <br />
                         <input name='name' type="text" defaultValue={user?.displayName} disabled placeholder="Your Name" className="input w-full input-bordered pt-5" />
                         <br />
                         <br />
+
+
                         <input name='email' type="email" defaultValue={user?.email} disabled placeholder="Your Email" className="input w-full input-bordered" />
                         <br />
                         <br />

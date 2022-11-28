@@ -1,17 +1,26 @@
 import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { signIn, providerLogin } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
-    const location = useLocation();
+
+
+
+    const [token] = useToken(loginUserEmail);
+
     const navigate = useNavigate();
-    const from = location.state?.from?.pathname || '/';
+    if (token) {
+        navigate('/');
+    }
+
+
 
     const handleLogin = data => {
         console.log(data);
@@ -21,7 +30,6 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
                 setLoginUserEmail(data.email);
-                navigate(from, { replace: true });
             })
             .catch(error => {
                 console.log(error.message);
@@ -31,36 +39,21 @@ const Login = () => {
 
 
     const googleProvider = new GoogleAuthProvider()
-    const handleGoogleSignIn = () => {
+    const handleGoogleSignIn = data => {
         providerLogin(googleProvider)
             .then(result => {
                 const user = result.user;
-
-                // get jwt token
-                fetch('https://a-magical-momemt-maker-server.vercel.app/jwt', {
-                    method: "POST",
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify({ user: user.email })
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        localStorage.setItem('momentJwt-token', data.token)
-                    })
-                    .catch(e => console.error(e))
-                navigate(from, { replace: true });
-
-
+                console.log(user);
+                setLoginUserEmail(data.email);
+                navigate('/')
             })
             .catch(error => {
-                console.error(error);
+                console.log(error.message);
+                setLoginError(error.message);
             })
-
 
     }
 
-  
 
     return (
         <div className='h-[800px] flex justify-center items-center'>

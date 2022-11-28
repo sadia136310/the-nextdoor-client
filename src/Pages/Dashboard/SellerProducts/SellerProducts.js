@@ -102,7 +102,7 @@ const SellerProduct = () => {
                 deletingProduct &&
                 <ConfirmationModal
                     title={`Are you sure Delete ?`}
-                    message={`This product name ${deletingProduct.name}`}
+                    message={`This product name ${deletingProduct.productName}`}
                     closeModal={closeModal}
                     handleDeleteProduct={handleDeleteProduct}
                     modalData={deletingProduct}
