@@ -4,18 +4,18 @@ const Footer = () => {
     return (
         <footer className="footer p-10 bg-black text-white">
             <div>
-                <span className="footer-title">Services</span>
-                <a href='/' className="link link-hover">Fashion Photography</a>
-                <a href='/' className="link link-hover">Family Photography</a>
-                <a href='/' className="link link-hover">Wedding Photography</a>
-                <a href='/' className="link link-hover">Product Photography</a>
+                <span className="footer-title">Categories</span>
+                <a href='/' className="link link-hover">Bedroom Furniture</a>
+                <a href='/' className="link link-hover">Drawing Furniture</a>
+                <a href='/' className="link link-hover">Kitchen Furniture</a>
+
             </div>
             <div>
                 <span className="footer-title">Facilities</span>
                 <a href='/' className="link link-hover">About us</a>
-                <a href='/' className="link link-hover">Contact</a>
-                <a href='/' className="link link-hover">My Reviews</a>
-                <a href='/' className="link link-hover">Add Service</a>
+                <a href='/' className="link link-hover">User Order</a>
+                <a href='/' className="link link-hover">User Selling product</a>
+
             </div>
             <div>
                 <span className="footer-title">Social</span>

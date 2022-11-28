@@ -15,7 +15,7 @@ const Banner = () => {
                     <p className='text-4xl text-white'>Smart Solutions for Modern Living.!</p>
 
                     <div className="card-actions">
-                        <button className="btn btn-outline">Discover More</button>
+                        <button className="btn btn-outline btn-warning">Discover More</button>
                     </div>
                 </div>
                 <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-3/4">
@@ -32,7 +32,7 @@ const Banner = () => {
                     <p className='text-4xl text-white'>Smart Solutions for Modern Living.!</p>
 
                     <div className="card-actions">
-                        <button className="btn btn-outline">Discover More</button>
+                        <button className="btn btn-outline btn-warning">Discover More</button>
                     </div>
                 </div>
                 <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-3/4">
@@ -48,7 +48,7 @@ const Banner = () => {
 
                     <p className='text-4xl text-white'>Smart Solutions for Modern Living.!</p>
                     <div className="card-actions">
-                        <button className="btn btn-outline">Discover More</button>
+                        <button className="btn btn-outline btn-warning">Discover More</button>
                     </div>
                 </div>
                 <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-3/4">
