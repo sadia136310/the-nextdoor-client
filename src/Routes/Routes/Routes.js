@@ -43,7 +43,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/categories/:id',
-                element: <CategoriesDetails></CategoriesDetails>,
+                element: <PrivateRoute> <CategoriesDetails></CategoriesDetails></PrivateRoute>,
                 loader: ({ params }) => fetch(`https://the-nextdoor-server.vercel.app/product_categories/${params.id}`)
 
 
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/allusers',
-                element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
+                element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
             },
             {
                 path: '/dashboard/payment/:id',
