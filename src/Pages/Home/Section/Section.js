@@ -1,20 +1,21 @@
 import React from 'react';
-import img from '../../../images/s6.webp'
+import img from '../../../images/download.jpg'
 const Section = () => {
     return (
-        <div className='mx-10 my-4'>
-            <div className="hero min-h-screen bg-base-200 rounded">
-                <div className="hero-content flex-col lg:flex-row-reverse">
-                    <img src={img} className="max-w-sm rounded-lg shadow-2xl" alt='' />
-                    <div>
-                        <h1 className="text-5xl font-bold">About Us Our Collection!</h1>
-                        <p className="py-6">Explore our second hand furniture in best price.Best & largest furniture online shop in Bangladesh.</p>
-                        <button className="btn btn-outline btn-warning">About More</button>
-                    </div>
-                </div>
-            </div>
+      <div className='my-4 mx-10'>
+        <h2 className='text-purple-400 text-3xl text-center font-bold'>About Us</h2>
+          <div className="card card-side bg-base-100 shadow-xl">
+        <figure><img src={img} alt="Movie"/></figure>
+        <div className="card-body">
+          <h2 className="card-title">Our Collection!</h2>
+          <p>Explore our second hand furniture in best price.Best & largest furniture online shop in Bangladesh..</p>
+          <div className="card-actions justify-end">
+            <button className="btn btn-outline btn-warning">See More</button>
+          </div>
         </div>
+      </div>
 
+      </div>
 
     );
 };
